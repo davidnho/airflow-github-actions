@@ -1,0 +1,40 @@
+name: Run Airflow DAG
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-airflow-dag:
+    runs-on: ubuntu-latest
+
+    env:
+      AIRFLOW_HOME: /home/runner/airflow
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Airflow
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Initialize Airflow Database
+        run: |
+          airflow db init
+
+      - name: List DAGs
+        run: |
+          airflow dags list
+
+      - name: Test DAG Task
+        run: |
+          airflow tasks test \
+          hello_airflow_github_actions \
+          hello_task \
+          2025-01-01
