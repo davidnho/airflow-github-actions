@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 def hello_world():
-    print("Hello from Apache Airflow running on GitHub Actions!")
+    print("Hello Noel - from Apache Airflow running on GitHub Actions!")
 
 
 with DAG(
